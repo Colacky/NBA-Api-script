@@ -1,4 +1,4 @@
-# Backend recruitement task for Profil Software 02/2022
+# Small CLI script using NBA Api
 
 ### By Sebastian 'Colacky' Kołacki
 <br>
@@ -16,14 +16,12 @@
 
 ### 1. Introduction<br>
 
-Hi, I'm Sebastian and this is my take on the recruitment task.<br>
-I have tried my best to ensure everything works as requested.<br>
+Hi, I'm Sebastian and this is my attempt a small CLI script that uses a public api.<br>
 It was fun and allowed me to learn a couple new things along the way.<br>
-Thanks for taking time to review it.<br><hr>
 
 ### 2. Short description of the project<br>
 
-As requested in the task, script.py is a script that processes data from an external API.<br>
+Script.py is a script that processes data from an external API.<br>
 It's using two other scripts - sqlite.py and validators.py - as their names suggest,<br>
 they are handling the database and input validation respectively.<br><hr>
 
