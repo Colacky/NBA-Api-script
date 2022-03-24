@@ -88,17 +88,17 @@ class TeamManager:
 
             all_stats += stats_data['data']
 
-        print('Gathering records complete.')
+        print("Gathering records complete.")
 
         return all_stats
 
     def printer(self, output, season_games):
         """Printer method for team-stats result output"""
 
-        if output == 'stdout':
+        if output == "stdout":
             for entry in season_games:
-                new_line='\n'
-                tab = '\t'
+                new_line="\n"
+                tab = "\t"
                 print(
                     f"{entry['team_name']}{new_line}"
                     f"{tab}won games as home team: {entry['won_games_as_home_team']}{new_line}"
@@ -107,17 +107,17 @@ class TeamManager:
                     f"{tab}lost games as visitor team: {entry['lost_games_as_visitor_team']}{new_line}"
                 )
 
-        elif output == 'csv':
+        elif output == "csv":
 
             header = [
-                'Team name',
-                'Won games as home team',
-                'Won games as visitor team',
-                'Lost games as home team',
-                'Lost games as visitor team'
+                "Team name",
+                "Won games as home team",
+                "Won games as visitor team",
+                "Lost games as home team",
+                "Lost games as visitor team"
                 ]
-            with open('team-stats.csv', 'w', encoding='UTF8', newline='') as file:
-                writer = csv.writer(file, delimiter=',', quotechar='"')
+            with open("team-stats.csv", "w", encoding="UTF8", newline='') as file:
+                writer = csv.writer(file, delimiter=",", quotechar='"')
                 writer.writerow(header)
                 for team in season_games:
                     writer.writerow([f'{team["team_name"]}',
@@ -126,12 +126,12 @@ class TeamManager:
                     f'{team["lost_games_as_home_team"]}',
                     f'{team["lost_games_as_visitor_team"]}'])
 
-            print('CSV file created.')
-        elif output == 'json':
-            with open('team-stats.json', 'w', encoding='UTF8') as file:
+            print("CSV file created.")
+        elif output == "json":
+            with open("team-stats.json", "w", encoding="UTF8") as file:
                 json.dump(season_games, file, indent=4)
-            print('JSON file created.')
-        elif output == 'sqlite':
+            print("JSON file created.")
+        elif output == "sqlite":
             create_db()
             insert_records(season_games)
 
@@ -146,13 +146,13 @@ class TeamManager:
 
         for team in team_list:
             team_stats = {
-                'team_name' : 'team_name',
-                'won_games_as_home_team' : 0,
-                'won_games_as_visitor_team' : 0,
-                'lost_games_as_home_team' : 0,
-                'lost_games_as_visitor_team' : 0,
+                "team_name" : "team_name",
+                "won_games_as_home_team" : 0,
+                "won_games_as_visitor_team" : 0,
+                "lost_games_as_home_team" : 0,
+                "lost_games_as_visitor_team" : 0,
             }
-            team_stats['team_name'] = team.city + ' ' + team.name + ' ' + '('+team.abbr+')'
+            team_stats['team_name'] = team.city + " " + team.name + " " + "("+team.abbr+")"
 
             for entry in all_stats:
                 if entry['home_team']['id'] == team.id_ and entry['home_team_score'] > entry['visitor_team_score']:
@@ -229,13 +229,13 @@ class PlayerManager:
 
         ## This loops through all pages until last page and adds the data to data list
 
-        print('Gathering records.')
+        print("Gathering records.")
         while player_json['meta']['next_page'] is not None and player_json['meta']['total_pages'] != 1:
             player_json = requests.get(f"https://www.balldontlie.io/api/v1/players/?search={player_name}&per_page=100&page={player_json['meta']['next_page']}").json()
 
             total_players_json += player_json['data']
 
-        print('Gathering records complete - formatting data.')
+        print("Gathering records complete - formatting data.")
 
         ## Prune names mismatched by the API (not exact matches in last name for some reason?)
         pruned_players_found = []
@@ -258,7 +258,7 @@ class PlayerManager:
                     weight_pounds=player['weight_pounds'],
                     )
                 )
-        print(f'Players found:{len(players_found)}')
+        print(f"Players found:{len(players_found)}")
         return players_found
 
     ## This method finds the tallest player amongst players found, who have their height on record
@@ -266,7 +266,7 @@ class PlayerManager:
         """Sorts players matching the query by height and returns the highest"""
         player_list = []
         for player in players_found:
-            if Player.height(player) == 'Not found':
+            if Player.height(player) == "Not found":
                 pass
             else:
                 player_list.append(player)
@@ -275,14 +275,14 @@ class PlayerManager:
             print("The tallest player: Not found")
         else:
             output_list = sorted(player_list, key=lambda x: x.height(), reverse=True)
-            print(f'The tallest player: {output_list[0].first_name} {output_list[0].last_name} {output_list[0].height()} meters')
+            print(f"The tallest player: {output_list[0].first_name} {output_list[0].last_name} {output_list[0].height()} meters")
 
     ## This method finds the heaviest player amongst players found, who have their weight on record
     def find_heaviest(self, players_found):
         """Sorts players matching the query by weight and returns the heaviest"""
         player_list = []
         for player in players_found:
-            if Player.weight(player) == 'Not found':
+            if Player.weight(player) == "Not found":
                 pass
             else:
                 player_list.append(player)
@@ -290,7 +290,7 @@ class PlayerManager:
             print("The heaviest player: Not found")
         else:
             output_list = sorted(player_list, key=lambda x: x.height(), reverse=True)
-            print(f'The heaviest player: {output_list[0].first_name} {output_list[0].last_name} {output_list[0].weight()} kilograms')
+            print(f"The heaviest player: {output_list[0].first_name} {output_list[0].last_name} {output_list[0].weight()} kilograms")
 
     ## This method is directly called by the command line and calls all other necessary methods as well as passing the name parameter
     def player_stats(self, name):
@@ -300,7 +300,7 @@ class PlayerManager:
         self.find_heaviest(players_found)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
 
     print("Script started.")
 
@@ -318,27 +318,27 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     ## Handle parsing
-    if args.command == 'grouped-teams':
-        print(f'function called:{args.command}')
+    if args.command == "grouped-teams":
+        print(f"function called:{args.command}")
         tm.grouped_teams()
-    elif args.command == 'player-stats':
+    elif args.command == "player-stats":
         if args.name is None:
             print("--name is a required parameter for player-stats, please provide one")
         else:
             if validate_player_name(args.name) is True:
-                print(f'function called:{args.command}, parameters passed: {args.name}')
+                print(f"function called:{args.command}, parameters passed: {args.name}")
                 pm.player_stats(args.name)
             else:
                 error = validate_player_name(args.name)
                 print(error)
-    elif args.command == 'team-stats':
+    elif args.command == "team-stats":
         if args.season is None:
             print("--season is a required parameter for team-stats, please provide one")
         elif args.output is None:
             print("--output cannot be empty, please provide one or ommit --output")
         else:
             if validate_season_year(args.season) is True:
-                print(f'function called:{args.command}, parameters passed: season: {args.season}, output: {args.output}')
+                print(f"function called:{args.command}, parameters passed: season: {args.season}, output: {args.output}")
                 tm.get_team_stats(args.season, args.output)
             else:
                 error = validate_season_year(args.season)
